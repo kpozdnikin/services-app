@@ -1,0 +1,11 @@
+{
+  "cost": 100111,
+  "desc": "Test service description",
+  "duration": 0,
+  "enabled": true,
+  "kioskEnabled": true,
+  "name": "Test service name",
+  "requiresPrepaid": false,
+  "serviceCategoriesId": [],
+  "tax": []
+}

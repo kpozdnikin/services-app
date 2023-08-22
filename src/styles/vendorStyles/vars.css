@@ -1,0 +1,9 @@
+/*------------------------------------*\
+    #DEFAULT SETTINGS
+\*------------------------------------*/
+
+* {
+    --primaryColor: #007fff;
+    --primaryColorDark: #0053b0;
+    --btnFontColor: #000000;
+}

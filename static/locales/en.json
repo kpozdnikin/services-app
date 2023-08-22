@@ -1,0 +1,172 @@
+{
+  "pages": {
+    "services": {
+      "buttons": {
+        "categories": "Categories",
+        "exportToCsv": "Export to CSV",
+        "addService": "Add Service"
+      },
+      "list": {
+        "columns": {
+          "sort": "Sort",
+          "name": "Service name",
+          "duration": "Duration",
+          "price": "Price",
+          "tax": "Tax",
+          "category": "Category",
+          "status": "Status"
+        },
+        "status": {
+          "enabled": "Enabled",
+          "disabled": "Disabled"
+        }
+      },
+      "emptyMessage": "Wow, such empty"
+    },
+    "categories": {
+      "buttons": {
+        "services": "Services",
+        "addCategory": "Add Category"
+      },
+      "list": {
+        "emptyMessage": "No categories are added. Click button to add new category.",
+        "columns": {
+          "name": "Name"
+        }
+      },
+      "form": {
+        "deleteConfirm": {
+          "message": "Are you sure you want to delete a category?",
+          "title": "Delete a category",
+          "buttons": {
+            "delete": "Delete",
+            "cancel": "Cancel"
+          }
+        },
+        "name": {
+          "label": "Name",
+          "placeholder": "Category name"
+        },
+        "buttons": {
+          "delete": "Delete",
+          "cancel": "Cancel",
+          "save": "Save"
+        }
+      },
+      "add": {
+        "title": "Categories"
+      },
+      "edit":{
+        "title": "Categories"
+      }
+    },
+    "service": {
+      "form": {
+        "limitedPermissionsHint": "Only brand users can edit this field",
+        "name": {
+          "label": "Service name",
+          "placeholder": "e.g. Beard Trimming"
+        },
+        "addFrenchNameBtn": "Add the service name in French",
+        "localizedName": {
+          "label": "Service name in {{language}}",
+          "placeholder": "Service name in {{language}}"
+        },
+        "description": {
+          "label": "Description (max 300 characters)",
+          "placeholder": "Add service description"
+        },
+        "addFrenchDescriptionBtn": "Add the service description in French",
+        "localizedDescription": {
+          "label": "Description in {{language}}",
+          "placeholder": "Description in {{language}}"
+        },
+        "category": {
+          "label": "Category"
+        },
+        "tax": {
+          "label": "Select type of tax",
+          "tooltip": "Only taxes assigned to a location will apply. Ex: if your New York location only has one tax rate, “City Tax,” and your London location has one tax rate, “VAT,” selecting both will only add the applicable tax rate depending on where the service is charged"
+        },
+        "locationsDefault": {
+          "label": "Default for all locations",
+          "tooltip": "These defaults will be automatically assigned to new locations and barbers. On the next “Assign Service” tab: services can be removed from locations and barbers. Additionally, these defaults can be overridden on a per shop or per barber basis."
+        },
+        "serviceDuration": {
+          "label": "Service duration",
+          "suffixHours": "hours",
+          "suffixMinutes": "min"
+        },
+        "pricing": {
+          "label": "Pricing"
+        }
+      },
+      "toggles": {
+        "onlineVisibility": {
+          "label": "Online visibility",
+          "tooltip": "When enabled, this service will appear in your Booking Site and Embedded Widgets. This will not affect your ability to choose it when you create an appointment"
+        },
+        "requiresPrepaid": {
+          "label": "Requires prepaid",
+          "tooltip": "When enabled, this service will require your clients to pay before booking it"
+        },
+        "kiosk": {
+          "label": "Kiosk",
+          "tooltip": "Sliding this on allows walk-in clients to book this service at an iPad in your shop"
+        }
+      },
+      "deleteConfirm": {
+        "message": "Are you sure you want to delete a service?",
+        "title": "Delete a service",
+        "buttons": {
+          "delete": "Delete",
+          "cancel": "Cancel"
+        }
+      },
+      "add": {
+        "title": "Add service",
+        "buttons": {
+          "cancel": "Cancel",
+          "next": "Next",
+          "save": "Save"
+        }
+      },
+      "assignments": {
+        "location": "Location",
+        "duration": "Duration",
+        "pricing": "Pricing",
+        "buttons": {
+          "delete": "Delete",
+          "cancel": "Cancel",
+          "back": "Back",
+          "save": "Save"
+        }
+      },
+      "edit": {
+        "title": "Edit service",
+        "buttons": {
+          "delete": "Delete",
+          "cancel": "Cancel",
+          "next": "Next",
+          "save": "Save"
+        }
+      }
+    }
+  },
+  "common": {
+    "loading": "Loading",
+    "generalError": {
+      "title": "Something went wrong",
+      "tryAgain": "Try again"
+    }
+  },
+  "errors": {
+    "default": "Incorrect value",
+    "required": "Field is required",
+    "email": "Please enter a valid email address",
+    "date": "Please enter a valid date",
+    "fieldTooLong": "Field must be at most ${max} characters",
+    "fieldTooShort": "Field must be at least ${min} characters",
+    "phone": "Please enter a valid phone"
+  }
+}

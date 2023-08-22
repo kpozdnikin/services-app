@@ -1,0 +1,104 @@
+pipeline {
+    agent {
+        docker {
+            image 'saturized/node-aws:node-14'
+        }
+    }
+
+    libraries {
+        lib('squire-library')
+    }
+
+    environment {
+        HOME = '.home'
+        PUBLIC_DATADOG_APP_ID = '78bbb45c-4d86-4ec0-b967-d86e0f602463'
+        PUBLIC_DATADOG_TOKEN = 'pubdb7d17e21f41602744729dd9fd152e25'
+        PUBLIC_DATADOG_SERVICE = 'tcs-web-services'
+        PUBLIC_DATADOG_SAMPLE_RATE = '100'
+        PUBLIC_APP_ROOT_ID = 'services-app-root'
+        FEDERATED = 'true'
+        AWS_REGION = 'us-west-1'
+        SLACK_CHANNEL = '#shop-assets-dev'
+    }
+
+    stages {
+        stage('Install packages') {
+            environment {
+                NPM_TOKEN = credentials('squire-npm-readonly')
+            }
+
+            steps {
+                sh 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ./.npmrc'
+                sh 'yarn install --frozen-lockfile'
+            }
+        }
+
+        stage('Deploy to QA') {
+            environment {
+                AWS_ACCOUNT = '517436753285'
+                PUBLIC_API_URL = 'https://api-qa-1.getsquire.com'
+                PUBLIC_DEPLOYMENT_ENV = 'qa'
+                PUBLIC_DEPLOYMENT_URL = 'https://services-app-qa-1.getsquire.com'
+                NODE_ENV = 'production'
+            }
+
+            steps {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '12d34ad4-d93a-47eb-9b4f-403d8fcf98ae', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                   withAWS(roleAccount:"${AWS_ACCOUNT}", role:'OrganizationAccountAccessRole') {
+                     sh 'yarn build'
+                     sh 'yarn deploy'
+                   }
+               }
+            }
+
+            post {
+                success {
+                    slackSend(channel: "${SLACK_CHANNEL}", color: '#77dd77', message: "SUCCESSFUL: Changes deployed to ${PUBLIC_DEPLOYMENT_URL} | More info on (${env.BUILD_URL})")
+                }
+
+                failure {
+                    slackSend (channel: "${SLACK_CHANNEL}", color: '#ff6961', message: "FAILED: [QA] Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+            }
+        }
+
+        stage('Deploy to Development') {
+            environment {
+                AWS_ACCOUNT = '318311382317'
+                PUBLIC_API_URL = 'https://api-dev.getsquire.com'
+                PUBLIC_DEPLOYMENT_ENV = 'development'
+                PUBLIC_DEPLOYMENT_URL = 'https://services-app-dev-1.getsquire.com'
+                NODE_ENV = 'production'
+            }
+
+            steps {
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: '12d34ad4-d93a-47eb-9b4f-403d8fcf98ae', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                   withAWS(roleAccount:"${AWS_ACCOUNT}", role:'OrganizationAccountAccessRole') {
+                     sh 'yarn build'
+                     sh 'yarn deploy'
+                   }
+               }
+            }
+
+            post {
+                success {
+                    slackSend(channel: "${SLACK_CHANNEL}", color: '#77dd77', message: "SUCCESSFUL: Changes deployed to ${PUBLIC_DEPLOYMENT_URL} | More info on (${env.BUILD_URL})")
+                }
+
+                failure {
+                    slackSend (channel: "${SLACK_CHANNEL}", color: '#ff6961', message: "FAILED: [Development] Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+                }
+            }
+        }
+
+        stage('Push sourcemaps to Datadog') {
+            environment {
+                DATADOG_API_KEY = credentials('datadog-api-key')
+            }
+
+            steps {
+                sh 'yarn upload-sourcemaps-datadog'
+            }
+        }
+    }
+}

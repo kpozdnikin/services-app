@@ -1,0 +1,12 @@
+export { default as ArrowUp } from './arrow-up.svg';
+export { default as ArrowDown } from './arrow-down.svg';
+export { default as CrossCircle } from './icon-x.svg';
+export { default as DragDrop } from './icon-drag_drop.svg';
+export { default as Lock } from './lock.svg';
+export { default as LongArrowLeft } from './longarrow-left.svg';
+export { default as Spinner } from './icon-spinner.svg';
+export { default as Plus } from './icon-plus.svg';
+export { default as Cross } from './cross.svg';
+export { default as CrossSign } from './cross-sign.svg';
+export { default as PlusSign } from './plus-sign.svg';
+export { default as LanguageGlobe } from './language-globe.svg';

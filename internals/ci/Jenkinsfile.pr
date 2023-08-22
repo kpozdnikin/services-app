@@ -1,0 +1,46 @@
+pipeline {
+    agent {
+        docker {
+            image 'cypress/base:16.13.0'
+        }
+    }
+
+    environment {
+        HOME = '.home'
+    }
+
+    stages {
+        stage('Install packages') {
+            environment {
+                NPM_TOKEN = credentials('squire-npm-readonly')
+            }
+
+            steps {
+                sh 'echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ./.npmrc'
+                sh 'yarn install --frozen-lockfile'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'yarn build'
+            }
+        }
+
+        stage('Test') {
+            parallel {
+                stage('Cypress tests') {
+                    steps {
+                        sh 'yarn test:ci'
+                    }
+                }
+
+                stage('Lint') {
+                    steps {
+                        sh 'yarn lint:ci'
+                    }
+                }
+            }
+        }
+    }
+}

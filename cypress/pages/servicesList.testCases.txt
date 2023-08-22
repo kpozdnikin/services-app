@@ -1,0 +1,113 @@
+Page: all services
+User type: brand
+Permissions: view services(on), add/modify services(on)
+
+Checks:
+The user can see the list of services
+The user cannot reorder services
+
+All table rows have the following columns: name, duration, price, tax, category, status
+The user can see the categories link and the link should take them to the categories URL
+The user can see the export to CSV button
+The user can see the add a service link and the link takes them to the right URL
+The user can click on any service and it will take them to the service details page
+
+Page: all services
+User type: brand
+Permissions: view services(on), add/modify services(off)
+
+Checks:
+The user cannot see the add a service link
+The user cannot click on services and open service info
+
+Page: all services
+User type: brand
+
+Permissions: view services(off), add/modify services(any)
+
+Checks:
+The user cannot open the services page
+
+Page: all services
+User type: shop
+Permissions: view services(on), add/modify services(on)
+
+Checks:
+The user can see the list of services
+The user can reorder services
+All table rows have the following columns: name, duration, price, tax, category, status
+The user can see the categories link and the link should take them to the categories URL
+The user can see the export to CSV button
+The user can see the add a service link and the link takes them to the right URL
+The user can click on any service and it will take them to the service details page
+
+Page: all services
+User type: shop
+Permissions: view services(on), add/modify services(off)
+
+Checks:
+The user cannot see the add a service link
+The user cannot reorder services
+The user cannot click on services and open service info
+
+Page: all services
+User type: shop
+Permissions: view services(off), add/modify services(any)
+
+Checks:
+The user cannot open the services page
+
+Page: all services
+User type: barber(commission, not indy)
+Permissions: view services(on), add/modify services(on)
+
+Checks:
+The user can see the list of services
+The user can reorder services
+All table rows have the following columns: name, duration, price, tax, category, status
+The user cannot see the categories link
+The user can see the export to CSV button
+
+Page: all services
+User type: barber(commission, not indy)
+Permissions: view services(on), add/modify services(off)
+
+Checks:
+The user cannot see the add a service link
+The user cannot reorder services
+The user cannot click on services and open service info
+
+Page: all services
+User type: barber(commission, not indy)
+Permissions: view services(off), add/modify services(any)
+
+Checks:
+The user cannot open the services page
+
+Page: all services
+User type: barber(rental or commission indy)
+Permissions: view services(on), add/modify services(on)
+
+Checks:
+The user can see the list of services
+The user can reorder services
+All table rows have the following columns: name, duration, price, tax, category, status
+The user can see the categories link and the link should take them to the categories URL
+The user can see the export to CSV button
+The user can see the add a service link and the link takes them to the right URL
+The user can click on any service and it will take them to the service details page
+
+API calls
+
+Get permissions
+/v1/user/session?include=shops.photos,shops.address,shops.logo,shops.barbers,shops.barbers.photos,barbers.shop,barbers.shop.address,brand,permissions
+
+Get all services
+Brand: GET /v2/brand/{brandId}/service?include=shops,category&limit=500&sortBy=order,createdAt:asc
+Shop: GET /v1/shop/{shopId}/barber/{barberId}/service?include=shops,category&limit=500&sortBy=order,createdAt:asc
+Barber: GET /v2/shop/{shopId}/barber/{barberId}/service?include=shops,category&limit=500&sortBy=order,createdAt:asc
+
+Export to csv
+Brand: GET /v2/brand/{brandId}/service?include=category&sortBy=order,createdAt:asc&view=csv called, response - services_brandName.csv
+Shop: GET /v1/shop/{shopId}/barber/{barberId}/service?include=category&sortBy=order,createdAt:asc&view=csv called, response - services_shopName.csv
+Barber: GET /v2/shop/{shopId}/barber/{barberId}/service?include=category&sortBy=order,createdAt:asc&view=csv
